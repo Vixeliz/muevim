@@ -8,6 +8,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdcommenter'
 Plug 'dense-analysis/ale'
 Plug 'm-pilia/vim-ccls'
+Plug 'junegunn/fzf' " Fuzzy
 "Plug 'maxboisvert/vim-simple-complete'
 
 " Visual
@@ -16,6 +17,7 @@ Plug 'vim-airline/vim-airline' " Bar
 Plug 'vim-airline/vim-airline-themes'
 Plug 'chrisbra/unicode.vim' " Insert unicode easy
 Plug 'romgrk/doom-one.vim' " One of the best themes
+Plug 'jreybert/vimagit'
 
 " Writing things
 Plug 'reedes/vim-pencil'
