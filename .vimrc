@@ -6,10 +6,17 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'preservim/tagbar'
 Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdcommenter'
-Plug 'dense-analysis/ale'
-Plug 'm-pilia/vim-ccls'
+Plug 'natebosch/vim-lsc'
+    let g:lsc_auto_map = v:true
+    let g:lsc_server_commands = {
+                \ 'c': {
+                \   'command': 'ccls',
+                \   'log_level': -1,
+                \   'suppress_stderr': v:true,
+                \ }
+                \}
+
 Plug 'junegunn/fzf' " Fuzzy
-"Plug 'maxboisvert/vim-simple-complete'
 
 " Visual
 Plug 'mhinz/vim-startify' " StartScreen
@@ -35,27 +42,18 @@ call plug#end()
 set complete-=t " tag completion
 set complete-=i " include completion
 
-" Ale(LSP) stuff
-let g:ale_c_cc_executable = 'clang'
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_linters = {'c': ['ccls']}
-let g:ale_cpp_ccls_init_options = {
-            \ 'cache': {
-            \ 'directory': './ccls-cache'
-            \ }
-            \ }
-let g:ale_completion_enabled = 1
-let g:ale_c_cc_options = '-Iinclude -Iexternal -Wall -std=c99'
-set omnifunc=ale#completion#OmniFunc
-
-augroup HoverAfterComplete
-    autocmd!
-    autocmd User ALECompletePost ALEHover
-augroup END
-
 " Visual
 let g:airline#extensions#tabline#enabled = 1
+
+"LSP Stuff
+set completeopt=menu,menuone,noinsert,noselect
+set completeopt-=preview
+let g:lsc_enable_autocomplete = v:true
+let g:lsc_enable_disagnostics = v:true
+let g:lsc_reference_highlights = v:true
+let g:lsc_enable_apply_edit = v:false
+let g:lsc_trace_level = 'off'
+autocmd CompleteDone * silent! pclose
 
 " Keybinds
 let mapleader=" " " Map leader key to space
@@ -65,10 +63,10 @@ nn <silent> <leader>q :tabclose<CR>
 
 nmap <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
-nn <silent> <Leader>d :ALEGoToDefinition<CR>
-nn <silent> <Leader>r :ALEFindReferences<CR>
-nn <silent> <Leader>a :ALESymbolSearch<CR>
-nn <silent> <Leader>h :ALEHover<CR>
+nn <silent> <Leader>d :LSClientGoToDefinition<CR>
+nn <silent> <Leader>r :LSClientFindReferences<CR>
+nn <silent> <Leader>a :LSClientWorkspaceSymbol<CR>
+nn <silent> <Leader>h :LSClientShowHover<CR>
 
 " Colorscheme
 set background=dark
@@ -79,7 +77,7 @@ let g:airline_theme='atomic'
 " Spelling
 "set spell spelllang=en_us
 
-" Sane defaultsa
+" Sane defaults
 set relativenumber " Make the number to current line
 set linebreak
 set showbreak=+++
