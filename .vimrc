@@ -59,7 +59,7 @@ autocmd CompleteDone * silent! pclose
 let mapleader=" " " Map leader key to space
 nn <silent> <leader>1 :tabprevious<CR>
 nn <silent> <leader>2 :tabn<CR>
-nn <silent> <leader>q :tabclose<CR>
+"nn <silent> <leader>q :tabclose<CR>
 
 nmap <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
@@ -67,6 +67,9 @@ nn <silent> <Leader>d :LSClientGoToDefinition<CR>
 nn <silent> <Leader>r :LSClientFindReferences<CR>
 nn <silent> <Leader>a :LSClientWorkspaceSymbol<CR>
 nn <silent> <Leader>h :LSClientShowHover<CR>
+
+" Compile roff file
+nn <silent> <Leader>g :!pdfroff -e % > $(echo %.pdf <bar> sed 's/roff\.//g')<CR>
 
 " Colorscheme
 set background=dark
